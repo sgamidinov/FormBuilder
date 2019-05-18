@@ -1,3 +1,23 @@
 body {
-  font-family: sans-serif;
+    font-family: sans-serif;
+}
+
+
+input[type="text"] {
+    font-size: 16px;
+    outline: none;
+    padding: 4px 8px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .4);
+    border: none;
+    transition: .2s;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+input.invalid {
+    box-shadow: 0 0 4px rgba(255, 0, 0, .9);
+}
+
+input.valid {
+    box-shadow: 0 0 4px rgba(0, 255, 0, .9);
 }

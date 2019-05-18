@@ -2,22 +2,22 @@ import Validators from "./validators";
 import FormField from "./formField";
 
 class FormBuilder {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  onSubmit() {
+    onSubmit() {
 
-  }
+    }
 
-  validate() {
+    validate() {
 
-  }
+    }
 
-  reset() {
-    
-  }
+    reset() {
+
+    }
 }
 
 export default FormBuilder;
-export { Validators, FormField };
+export {Validators, FormField};
