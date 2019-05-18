@@ -8,12 +8,12 @@ class Group {
         this.setFields(fields);
     }
 
-    set valid(value) {
-        this._valid = value;
-    }
-
     get valid() {
         return this._valid;
+    }
+
+    set valid(value) {
+        this._valid = value;
     }
 
     get value() {

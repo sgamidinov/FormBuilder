@@ -6,7 +6,7 @@ const field = new Field({
     name: 'age',
     configuration: {
         errorClass: 'invalid',
-        middlewares: [
+        pipes: [
             value => {
                 return value.replace(/(\d{4}(?!\s))/g, "$1 ")
             },
@@ -55,7 +55,7 @@ const agreement = new Field({
 const comment = new Field({
     name: 'comment',
     configuration: {
-        middlewares: [
+        pipes: [
             value => value.toUpperCase(),
         ],
         validators: [
@@ -77,7 +77,7 @@ const fullName = new Group({
         firstname: {
             name: 'firstname',
             configuration: {
-                middlewares: [
+                pipes: [
                     value => {
                         return capitalize(value)
                     }
@@ -93,7 +93,7 @@ const fullName = new Group({
         lastName: new Field({
             name: 'lastname',
             configuration: {
-                middlewares: [
+                pipes: [
                     value => {
                         return capitalize(value)
                     }
@@ -113,12 +113,16 @@ const fullName = new Group({
     }
 });
 
-const fval = document.querySelector('.fval')
+const fval = document.querySelector('.fval');
 const frequency = new Field({
     name: 'frequency',
+    value: 788,
     configuration: {
-        middlewares: [
-            value => parseInt(value),
+        pipes: [
+            value => {
+                if (value === '0') return 0;
+                return parseFloat(value);
+            },
         ],
         validators: [
             {
@@ -130,12 +134,37 @@ const frequency = new Field({
                 message: 'Max possible value is 40'
             },
         ],
+        hooks: {
+            input: (event, {value}) => {
+                fval.innerHTML = value
+            }
+        },
         onValid() {
-            fval.innerHTML = this.value
+
         }
     }
 });
 
-console.log(frequency)
+
+const email = new Field({
+    name: 'email',
+    value: 's.gamidinov@gmail.com',
+    configuration: {
+        validators: [
+            {
+                rule: Validators.email(),
+                message: 'Wrong email address'
+            }
+        ]
+    },
+    hooks: {
+        input: () => {
+            console.log(this.value)
+        }
+    }
+});
+
+
+console.log(frequency);
 
 // console.log(fullName)

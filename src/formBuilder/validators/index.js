@@ -1,4 +1,4 @@
-import {onlyNumbers, onlyNumbersAndSpace} from "../shared/regex";
+import {email, onlyNumbers, onlyNumbersAndSpace} from "../shared/regex";
 
 export default class Validators {
     static Required() {
@@ -52,6 +52,10 @@ export default class Validators {
         return value => {
             return onlyNumbersAndSpace.test(value);
         }
+    }
+
+    static email() {
+        return value => email.test(value);
     }
 
     static bankCardNumber() {
