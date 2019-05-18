@@ -34,6 +34,14 @@ export default class Validators {
         }
     }
 
+    static minValue(limit) {
+        return value => {
+            const number = parseInt(value);
+            if (Number.isNaN(number)) return false;
+            return number >= limit;
+        }
+    }
+
     static onlyNumbers() {
         return value => {
             return onlyNumbers.test(value);

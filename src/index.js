@@ -1,8 +1,8 @@
 import "./styles.css";
-import {FormField, Validators} from "./formBuilder";
-import compose from './formBuilder/utils/compose'
+import {Field, Group, Validators} from "./formBuilder";
+import capitalize from "./formBuilder/utils/capitalize";
 
-const field = new FormField({
+const field = new Field({
     name: 'age',
     configuration: {
         errorClass: 'invalid',
@@ -39,7 +39,7 @@ const field = new FormField({
     }
 });
 
-const agreement = new FormField({
+const agreement = new Field({
     name: 'agreement',
     configuration: {
         validators: [
@@ -51,14 +51,91 @@ const agreement = new FormField({
     }
 });
 
-function f1(val) {
-    return val + ' f1'
-}
 
-function f2(val) {
-    return val + ' f2'
-}
+const comment = new Field({
+    name: 'comment',
+    configuration: {
+        middlewares: [
+            value => value.toUpperCase(),
+        ],
+        validators: [
+            {
+                rule: Validators.Required(),
+                message: 'Fill out this textarea'
+            },
+            {
+                rule: Validators.maxLength(72),
+                message: 'Make your message shorter'
+            }
+        ]
+    }
+});
 
-const composed = compose(f1, f2);
 
-console.log(composed('meow'));
+const fullName = new Group({
+    fields: {
+        firstname: {
+            name: 'firstname',
+            configuration: {
+                middlewares: [
+                    value => {
+                        return capitalize(value)
+                    }
+                ],
+                validators: [
+                    {
+                        rule: Validators.Required(),
+                        message: 'Cannot be empty'
+                    }
+                ]
+            }
+        },
+        lastName: new Field({
+            name: 'lastname',
+            configuration: {
+                middlewares: [
+                    value => {
+                        return capitalize(value)
+                    }
+                ],
+                validators: [
+                    {
+                        rule: Validators.Required(),
+                        message: 'Cannot be empty'
+                    },
+                    {
+                        rule: Validators.maxLength(18),
+                        message: 'Make your message shorter'
+                    }
+                ]
+            }
+        })
+    }
+});
+
+const fval = document.querySelector('.fval')
+const frequency = new Field({
+    name: 'frequency',
+    configuration: {
+        middlewares: [
+            value => parseInt(value),
+        ],
+        validators: [
+            {
+                rule: Validators.minValue(4),
+                message: 'Max possible value is 40'
+            },
+            {
+                rule: Validators.maxValue(40),
+                message: 'Max possible value is 40'
+            },
+        ],
+        onValid() {
+            fval.innerHTML = this.value
+        }
+    }
+});
+
+console.log(frequency)
+
+// console.log(fullName)

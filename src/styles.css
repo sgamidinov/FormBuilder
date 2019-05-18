@@ -1,7 +1,17 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: sans-serif;
 }
 
+
+form {
+    max-width: 360px;
+    margin: 42px auto;
+}
 
 input[type="text"] {
     font-size: 16px;
@@ -20,4 +30,27 @@ input.invalid {
 
 input.valid {
     box-shadow: 0 0 4px rgba(0, 255, 0, .9);
+}
+
+.errors {
+    overflow: hidden;
+    padding: 8px 4px;
+}
+
+.errors p {
+    font-size: 14px;
+    line-height: 1;
+    animation: show .15s linear;
+}
+
+@keyframes show {
+    0% {
+        transform: translateY(-32px);
+        opacity: 0;
+        font-size: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

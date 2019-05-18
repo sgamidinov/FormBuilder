@@ -1,7 +1,7 @@
-import {fieldSupportedListenerTypes, fieldValueAccessor} from './shared/constants';
-import {noop} from "./utils";
-import Capitalize from './utils/capitalize'
-import Compose from './utils/compose'
+import {fieldSupportedListenerTypes, fieldValueAccessor} from '../shared/constants';
+import {noop} from "../utils";
+import Capitalize from '../utils/capitalize'
+import Compose from '../utils/compose'
 
 const defaultConfiguration = {
     validators: [],
@@ -13,11 +13,11 @@ const defaultConfiguration = {
     errorMessageFormatter: msg => `<p style="color: red;">${msg}</p>`,
 };
 
-class FormField {
+class Field {
     constructor({name, configuration}) {
         this.configuration = Object.assign({}, defaultConfiguration, configuration);
         this.name = name;
-        this.fieldNode = document.querySelector(`input[name="${name}"]`);
+        this.fieldNode = document.querySelector(`[name="${name}"]`);
 
         if (!this.fieldNode) {
             throw new Error('Field element does\'not exist');
@@ -45,12 +45,7 @@ class FormField {
     }
 
     set value(value) {
-        if (typeof value === 'string') {
-            this._value = value.trim();
-        } else {
-            this._value = value;
-        }
-
+        this._value = value;
         this.fieldNode[this.valueAccessor] = this._value;
     }
 
@@ -99,7 +94,7 @@ class FormField {
 
     runMiddleware(value) {
         if (this.middleware) {
-            return this.middleware.call(this, value)
+            return this.middleware.call(this, value);
         }
 
         return value;
@@ -107,8 +102,13 @@ class FormField {
 
     onChange(event) {
         this.dirty = true;
-        this.value = this.runMiddleware(this.fieldNode[this.valueAccessor]);
-        this.validate();
+        const oldValue = this.value;
+        const newValue = this.runMiddleware(this.fieldNode[this.valueAccessor]);
+        this.value = newValue;
+
+        if (oldValue !== newValue) {
+            this.validate();
+        }
     }
 
     onFocus(event) {
@@ -163,4 +163,4 @@ class FormField {
     }
 }
 
-export default FormField;
+export default Field;

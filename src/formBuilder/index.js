@@ -1,23 +1,6 @@
 import Validators from "./validators";
-import FormField from "./formField";
+import Field from "./elements/field";
+import Group from "./elements/group";
 
-class FormBuilder {
-    constructor() {
 
-    }
-
-    onSubmit() {
-
-    }
-
-    validate() {
-
-    }
-
-    reset() {
-
-    }
-}
-
-export default FormBuilder;
-export {Validators, FormField};
+export {Validators, Field, Group};

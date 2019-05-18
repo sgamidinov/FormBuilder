@@ -34,6 +34,10 @@ const fieldSupportedListenerTypes = {
         listenerTypes.CHECKED,
         listenerTypes.RESET,
     ],
+    range: [
+        listenerTypes.CHANGE,
+        listenerTypes.INPUT,
+    ]
 };
 
 const VALUE = 'value';
@@ -43,7 +47,8 @@ const fieldValueAccessor = {
     text: VALUE,
     number: VALUE,
     radio: CHECKED,
-    checkbox: CHECKED
+    checkbox: CHECKED,
+    range: VALUE,
 };
 
 
